@@ -81,7 +81,7 @@ The test_df(Test data)
   ```json
   {
     "Sepssis_Prediction": "Positive"
-  }```
+  }
 
 ## 🚀 Installation & Setup
 
@@ -101,7 +101,7 @@ pip install -r requirements.txt
 ### Start the FastAPI server:
 uvicorn app:app --reload
 
-###bOpen your browser and test:
+### Open your browser and test:
 http://127.0.0.1:8000/docs  
 ```
 ## ✨ Future Improvements
