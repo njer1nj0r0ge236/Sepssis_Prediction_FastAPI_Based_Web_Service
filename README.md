@@ -53,10 +53,13 @@ The test_df(Test data)
 2. **Model Training**  
    - Logistic Regression (baseline).  
    - Random Forest & XGBoost (with hyperparameter tuning).  
-   - Logistic Regression achieved the best recall and was selected.  
+   - Logistic Regression achieved the best recall and was selected.
 
 3. **Model Evaluation**  
-   - Metrics: Accuracy, Precision, Recall, F1-score.  
+   - Metrics: Accuracy, Precision, Recall, F1-score.
+
+   **Logistic Regression** - Recall (positive class): 0.643 
+   **Logistic Regression** won after **hyperparameters tuning**
    - Emphasis on **recall for positive cases (sepsis detection)**.  
 
 4. **API Development**  
@@ -86,22 +89,22 @@ The test_df(Test data)
 ## 🚀 Installation & Setup
 
 ```bash
-### 1. Clone the repository
+# 1. Clone the repository
 git clone https://github.com/your-username/sepsis-api.git
 cd sepsis-api
 
-### 2. Create a virtual environment
+# 2. Create a virtual environment
 python -m venv venv
 venv\Scripts\activate
 
-### Install dependencies
+# Install dependencies
 pip install -r requirements.txt
 
-### Running the API locally
-### Start the FastAPI server:
-uvicorn app:app --reload
+# Running the API locally
+# Start the FastAPI server:
+uvicorn main:app --reload
 
-### Open your browser and test:
+# Open your browser and test:
 http://127.0.0.1:8000/docs  
 ```
 ## ✨ Future Improvements
