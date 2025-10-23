@@ -3,6 +3,7 @@ from pydantic import BaseModel
 import pandas as pd
 import joblib
 import gradio as gr
+import os
 
 # Load the trained model
 model = joblib.load("sepssis_model.pkl")
@@ -22,23 +23,39 @@ class PatientData(BaseModel):
     Age: int
     Insurance: int
 
-@app.get("/")
-def home():
-    return {"message": "Welcome to the Sepssis Prediction API"}
 
+# Helper function to log predictions
+def log_prediction(data_dict, result):
+    log_entry = pd.DataFrame([data_dict])
+    log_entry["Prediction"] = result
+
+    log_file = "predictions_log.csv"
+    file_exists = os.path.isfile(log_file)
+    log_entry.to_csv(log_file, mode='a', header=not file_exists, index=False)
+
+
+# API Endpoint: Home@app.get("/")
+def home():
+    return {Welcome to the Sepssis Prediction API 🩺}
+
+
+# API Endpoint: Predict
 @app.post("/predict")
 def predict(data: PatientData):
     input_df = pd.DataFrame([data.dict()])
     input_df = input_df.reindex(columns=model.feature_names_in_, fill_value=0)
     prediction = model.predict(input_df)[0]
     result = "Positive" if prediction == 1 else "Negative"
+
+    # Log the prediction to CSV
+    log_prediction(data.dict(), result)
+
     return {"Sepssis_Prediction": result}
 
-# -------------------------------
+
 # Gradio Interface for Web UI
-# -------------------------------
 def predict_ui(PRG, PL, PR, SK, TS, M11, BD2, Age, Insurance):
-    input_df = pd.DataFrame([{
+    input_data = {
         "PRG": PRG,
         "PL": PL,
         "PR": PR,
@@ -48,9 +65,15 @@ def predict_ui(PRG, PL, PR, SK, TS, M11, BD2, Age, Insurance):
         "BD2": BD2,
         "Age": Age,
         "Insurance": Insurance
-    }])
+    }
+    input_df = pd.DataFrame([input_data])
     input_df = input_df.reindex(columns=model.feature_names_in_, fill_value=0)
     prediction = model.predict(input_df)[0]
+    result = "Positive" if prediction == 1 else "Negative"
+
+    # Log the prediction to CSV
+    log_prediction(input_data, result)
+
     return "🩺 Sepsis Prediction: Positive ✅" if prediction == 1 else "🩺 Sepsis Prediction: Negative ❌"
 
 demo = gr.Interface(
