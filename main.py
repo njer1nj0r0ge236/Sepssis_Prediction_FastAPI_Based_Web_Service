@@ -36,7 +36,7 @@ def log_prediction(data_dict, result):
 
 # API Endpoint: Home@app.get("/")
 def home():
-    return {Welcome to the Sepssis Prediction API 🩺}
+    return {"message": "Welcome to the Sepssis Prediction API 🩺"}
 
 
 # API Endpoint: Predict
@@ -95,3 +95,4 @@ demo = gr.Interface(
 )
 
 demo.launch(server_name="0.0.0.0", server_port=7860, share=False)
+
